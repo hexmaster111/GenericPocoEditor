@@ -30,6 +30,9 @@ public partial class MainWindow : Window
     }
 
 
+    [UiLayoutLine0(nameof(Name), nameof(Description))]
+    [UiLayoutLine1(nameof(SomeBool), nameof(MyEnum), nameof(SomeDouble))]
+    [UiLayoutLine2(nameof(StaticUserMethod), nameof(DoSomethingWildWithNoArguments))]
     public class TestPoco
     {
         [UiButton("Run static method")]
@@ -112,7 +115,8 @@ public partial class MainWindow : Window
 
         public enum TestEnum
         {
-            [EditorControllerFramework.UiAttributes.UiLabel("Test 1")] Test1,
+            [EditorControllerFramework.UiAttributes.UiLabel("Test 1")]
+            Test1,
             Test2,
             Test3
         }

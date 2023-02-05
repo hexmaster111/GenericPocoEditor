@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using EditorControllerFramework.Controllers;
 using EditorControllerFramework.UiAttributes;
 
@@ -8,11 +9,7 @@ public static class ControllerBuilder
 {
     public static FormController BuildFormController(object obj, Type type)
     {
-        var testTimer = Stopwatch.StartNew();
-
-
         var members = type.GetMembers();
-
         var uiButtons = members
             .Where(x => x.GetCustomAttributes(typeof(UiButton), false).Length > 0);
         var uiTextBlocks = members
@@ -26,6 +23,14 @@ public static class ControllerBuilder
         var uiSliders = members
             .Where(x => x.GetCustomAttributes(typeof(UiSlider), false).Length > 0);
 
+
+        var typeLayoutAttributes =
+            type
+                .GetCustomAttributes<UiLayoutLineAttribute>()
+                .OrderBy(x => x.LineNumber);
+
+        Debugger.Break();
+        
 
         var controllers = new FormController()
         {
@@ -43,8 +48,6 @@ public static class ControllerBuilder
                 .Select(x => new SliderController(x, obj)).ToArray()
         };
 
-        testTimer.Stop();
-        Console.WriteLine(testTimer.ElapsedTicks);
 
         return controllers;
     }
