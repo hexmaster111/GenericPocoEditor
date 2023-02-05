@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Editor.EditorTags;
+using ControllerFramework;
+using ControllerFramework.Exceptions;
+using ControllerFramework.UiAttributes;
 
 namespace Editor.EditorParts;
 
@@ -168,8 +170,8 @@ public static class ControllerBuilder
 
                         var enumNameLabelText = "";
                         var enumNameLabel =
-                            enumMember.GetCustomAttributes(typeof(EditorTags.Label), false)
-                                .FirstOrDefault() as EditorTags.Label;
+                            enumMember.GetCustomAttributes(typeof(UiLabel), false)
+                                .FirstOrDefault() as UiLabel;
 
                         enumNameLabelText = enumNameLabel == null ? enumMember.Name : enumNameLabel.Text;
 
@@ -195,8 +197,8 @@ public static class ControllerBuilder
 
                         var enumNameLabelText = "";
                         var enumNameLabel =
-                            enumMember.GetCustomAttributes(typeof(EditorTags.Label), false)
-                                .FirstOrDefault() as EditorTags.Label;
+                            enumMember.GetCustomAttributes(typeof(UiLabel), false)
+                                .FirstOrDefault() as UiLabel;
 
                         enumNameLabelText = enumNameLabel == null ? enumMember.Name : enumNameLabel.Text;
 

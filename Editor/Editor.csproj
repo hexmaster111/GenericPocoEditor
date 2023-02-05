@@ -28,4 +28,12 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="EditorTags" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ControllerFramework\ControllerFramework.csproj" />
+    </ItemGroup>
 </Project>
