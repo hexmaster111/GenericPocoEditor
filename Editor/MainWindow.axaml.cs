@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -14,9 +15,13 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        var a = new TestPoco(name: "Test", description: "Test Description", someField: "Yes", someOtherField: "sneeky");
+        var a = new TestPoco(name: "Test", description: "Test Description", someField: "Yes", someOtherField: "sneeky")
+        {
+            SomeOtherProperty = "Words"
+        };
 
-        ControllerBuilder.BuildFormController(a, a.GetType());
+        var res = ControllerBuilder.BuildFormController(a, a.GetType());
+        Debugger.Break();
     }
 
     public static void DoExecute(string message = "", [CallerMemberName] string name = "")
