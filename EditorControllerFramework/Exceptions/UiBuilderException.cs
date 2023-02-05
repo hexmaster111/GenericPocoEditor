@@ -1,4 +1,4 @@
-namespace ControllerFramework.Exceptions;
+namespace EditorControllerFramework.Exceptions;
 
 public class UiBuilderException : Exception
 {

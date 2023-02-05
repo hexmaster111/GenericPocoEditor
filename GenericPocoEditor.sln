@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{E910192A-A936-49AF-B2A7-4919B18994F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerFramework", "ControllerFramework\ControllerFramework.csproj", "{012C0564-8ADD-4BF8-B388-980959386F0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorControllerFramework", "EditorControllerFramework\EditorControllerFramework.csproj", "{012C0564-8ADD-4BF8-B388-980959386F0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

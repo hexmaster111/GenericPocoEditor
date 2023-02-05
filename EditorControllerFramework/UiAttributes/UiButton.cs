@@ -1,4 +1,4 @@
-namespace ControllerFramework;
+namespace EditorControllerFramework.UiAttributes;
 
 public class UiButton : UiAttribute
 {

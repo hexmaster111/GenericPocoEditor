@@ -30,10 +30,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="EditorTags" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\ControllerFramework\ControllerFramework.csproj" />
+      <ProjectReference Include="..\EditorControllerFramework\EditorControllerFramework.csproj" />
     </ItemGroup>
 </Project>

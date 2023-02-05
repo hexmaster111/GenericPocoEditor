@@ -1,4 +1,4 @@
-﻿namespace ControllerFramework.UiAttributes;
+﻿namespace EditorControllerFramework.UiAttributes;
 
 public class UiLabel : Attribute
 {

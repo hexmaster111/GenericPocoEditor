@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using ControllerFramework;
-using Editor.EditorParts;
+using EditorControllerFramework;
+using EditorControllerFramework.UiAttributes;
 
 namespace Editor;
 
@@ -112,7 +112,7 @@ public partial class MainWindow : Window
 
         public enum TestEnum
         {
-            [ControllerFramework.UiAttributes.UiLabel("Test 1")] Test1,
+            [EditorControllerFramework.UiAttributes.UiLabel("Test 1")] Test1,
             Test2,
             Test3
         }
