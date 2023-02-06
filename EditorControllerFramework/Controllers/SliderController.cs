@@ -4,11 +4,17 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class SliderController
+public class SliderController : IController
 {
     public string Label => _uiSlider.Label;
     public double Min => _uiSlider.Min;
     public double Max => _uiSlider.Max;
+
+    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
+    public int Row => _layoutLineAttribute.LineNumber;
+    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
+
+    private readonly UiLayoutLineAttribute _layoutLineAttribute;
 
     public double Value
     {
@@ -52,8 +58,9 @@ public class SliderController
         }
     }
 
-    public SliderController(MemberInfo memberInfo, object obj)
+    public SliderController(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
     {
+        _layoutLineAttribute = layoutLineAttribute;
         _memberInfo = memberInfo;
         _obj = obj;
         _uiSlider = _memberInfo.GetCustomAttributes<UiSlider>().First();

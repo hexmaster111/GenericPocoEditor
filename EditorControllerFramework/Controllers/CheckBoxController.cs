@@ -4,9 +4,15 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class CheckBoxController
+public class CheckBoxController : IController
 {
     public string Label;
+
+    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
+    public int Row => _layoutLineAttribute.LineNumber;
+    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
+
+    private readonly UiLayoutLineAttribute? _layoutLineAttribute;
 
     public bool IsChecked
     {
@@ -50,10 +56,11 @@ public class CheckBoxController
     object _obj;
 
 
-    public CheckBoxController(MemberInfo memberInfo, object obj)
+    public CheckBoxController(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
     {
         _memberInfo = memberInfo;
         _obj = obj;
         Label = _memberInfo.GetCustomAttributes<UiCheckBox>().First().Label;
+        _layoutLineAttribute = layoutLineAttribute;
     }
 }

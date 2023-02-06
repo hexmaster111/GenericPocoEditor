@@ -4,9 +4,15 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class TextBoxController
+public class TextBoxController : IController
 {
     public string Label;
+
+    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
+    public int Row => _layoutLineAttribute.LineNumber;
+    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
+
+    private readonly UiLayoutLineAttribute? _layoutLineAttribute;
 
     public string Text
     {
@@ -55,8 +61,9 @@ public class TextBoxController
         }
     }
 
-    public TextBoxController(MemberInfo memberInfo, object instance)
+    public TextBoxController(MemberInfo memberInfo, object instance, UiLayoutLineAttribute? layoutLineAttribute)
     {
+        _layoutLineAttribute = layoutLineAttribute;
         _memberInfo = memberInfo;
         Label = _memberInfo.GetCustomAttributes<UiTextBox>().First().Label;
         _obj = instance;

@@ -30,22 +30,23 @@ public static class ControllerBuilder
                 .OrderBy(x => x.LineNumber);
 
         Debugger.Break();
-        
+
 
         var controllers = new FormController()
         {
-            ButtonControllers = uiButtons
-                .Select(x => new ButtonController(x, obj)).ToArray(),
-            TextBlockControllers = uiTextBlocks
-                .Select(x => new TextBlockController(x, obj)).ToArray(),
-            TextBoxControllers = uiTextBoxes
-                .Select(x => new TextBoxController(x, obj)).ToArray(),
-            CheckBoxControllers = uiCheckBoxes
-                .Select(x => new CheckBoxController(x, obj)).ToArray(),
-            ComboBoxControllers = uiComboBoxes
-                .Select(x => new ComboBoxController(x, obj)).ToArray(),
-            SliderControllers = uiSliders
-                .Select(x => new SliderController(x, obj)).ToArray()
+            //The layout attribute is the typeLayoutAttribute that contains the button
+            ButtonControllers = uiButtons.Select(x => new ButtonController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray(),
+            TextBlockControllers = uiTextBlocks.Select(x => new TextBlockController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray(),
+            TextBoxControllers = uiTextBoxes.Select(x => new TextBoxController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray(),
+            CheckBoxControllers = uiCheckBoxes.Select(x => new CheckBoxController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray(),
+            ComboBoxControllers = uiComboBoxes.Select(x => new ComboBoxController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray(),
+            SliderControllers = uiSliders.Select(x => new SliderController(x, obj,
+                typeLayoutAttributes.FirstOrDefault(y => y.GetMemberIndex(x.Name) != -1))).ToArray()
         };
 
 

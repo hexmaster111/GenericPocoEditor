@@ -2,34 +2,44 @@
 
 public class UiLayoutLine0 : UiLayoutLineAttribute
 {
-    public UiLayoutLine0(params string[] nameOfElements) : base(0, nameOfElements)
+    public UiLayoutLine0(params string[] elementsName) : base(0, elementsName)
     {
     }
 }
 
 public class UiLayoutLine1 : UiLayoutLineAttribute
 {
-    public UiLayoutLine1(params string[] nameOfElements) : base(1, nameOfElements)
+    public UiLayoutLine1(params string[] elementsName) : base(1, elementsName)
     {
     }
 }
 
 public class UiLayoutLine2 : UiLayoutLineAttribute
 {
-    public UiLayoutLine2(params string[] nameOfElements) : base(2, nameOfElements)
+    public UiLayoutLine2(params string[] elementsName) : base(2, elementsName)
     {
     }
 }
 
 public class UiLayoutLineAttribute : Attribute
 {
-    public string[] NameOfElement;
-    public int LineNumber;
+    public readonly string[] ElementsName;
+    public readonly int LineNumber;
 
-    protected UiLayoutLineAttribute(int lineNumber, params string[] nameOfElements)
+    public int GetMemberIndex(string nameOfElement)
     {
-        NameOfElement = nameOfElements;
+        for (var i = 0; i < ElementsName.Length; i++)
+        {
+            if (ElementsName[i] == nameOfElement)
+                return i;
+        }
+
+        return -1;
+    }
+
+    protected UiLayoutLineAttribute(int lineNumber, params string[] elementsName)
+    {
+        ElementsName = elementsName;
         LineNumber = lineNumber;
     }
 }
-

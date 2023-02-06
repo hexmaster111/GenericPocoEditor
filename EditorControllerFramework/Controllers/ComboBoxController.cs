@@ -4,10 +4,15 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class ComboBoxController
+public class ComboBoxController : IController
 {
     private MemberInfo _memberInfo;
     private object _obj;
+    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
+    public int Row => _layoutLineAttribute.LineNumber;
+    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
+
+    private readonly UiLayoutLineAttribute _layoutLineAttribute;
 
     public EnumCbItem[] Items { get; set; }
 
@@ -37,11 +42,12 @@ public class ComboBoxController
     }
 
 
-    public ComboBoxController(MemberInfo memberInfo, object obj)
+    public ComboBoxController(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
     {
         _memberInfo = memberInfo;
         _obj = obj;
         Label = _memberInfo.GetCustomAttributes<UiComboBox>().First().Label;
+        _layoutLineAttribute = layoutLineAttribute;
 
 
         switch (memberInfo.MemberType)
