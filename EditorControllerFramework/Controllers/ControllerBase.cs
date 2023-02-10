@@ -1,8 +1,28 @@
-﻿namespace EditorControllerFramework.Controllers;
+﻿using System.Reflection;
+using EditorControllerFramework.Exceptions;
+using EditorControllerFramework.UiAttributes;
 
-public interface IController
+namespace EditorControllerFramework.Controllers;
+
+public class Controller
 {
-    public bool IsPlacedOnGrid { get; }
-    public int Row { get; }
-    public int Column { get; }
+    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
+    public int Row => _layoutLineAttribute.LineNumber;
+    public int Column => _layoutLineAttribute.GetMemberIndex(PropertyInfo.Name);
+
+    private readonly UiLayoutLineAttribute? _layoutLineAttribute;
+    public readonly PropertyInfo PropertyInfo;
+    public readonly object _obj;
+
+    public Controller(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute,
+        bool isMethod = false)
+    {
+        if (isMethod) return;
+        if (memberInfo.MemberType != MemberTypes.Property)
+            throw new UiBuilderException("Controllers only support properties");
+
+        _layoutLineAttribute = layoutLineAttribute;
+        PropertyInfo = (PropertyInfo)memberInfo;
+        _obj = obj;
+    }
 }

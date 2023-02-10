@@ -4,22 +4,14 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class ComboBoxController : IController
+public class ComboBoxController : Controller
 {
-    private readonly PropertyInfo _propertyInfo;
-    private readonly object _obj;
-    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
-    public int Row => _layoutLineAttribute.LineNumber;
-    public int Column => _layoutLineAttribute.GetMemberIndex(_propertyInfo.Name);
-
-    private readonly UiLayoutLineAttribute _layoutLineAttribute;
-
     public EnumCbItem[] Items { get; set; }
 
     public EnumCbItem SelectedItem
     {
-        get { return Items.First(x => x.Value == (int)_propertyInfo.GetValue(_obj)); }
-        set => _propertyInfo.SetValue(_obj, value.Value);
+        get { return Items.First(x => x.Value == (int)PropertyInfo.GetValue(_obj)); }
+        set => PropertyInfo.SetValue(_obj, value.Value);
     }
 
     public string Label;
@@ -39,14 +31,9 @@ public class ComboBoxController : IController
 
 
     public ComboBoxController(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
+        : base(memberInfo, obj, layoutLineAttribute)
     {
-        if (memberInfo.MemberType != MemberTypes.Property)
-            throw new UiBuilderException("UiComboBox attribute can only be used on properties");
-
-        _propertyInfo = (PropertyInfo)memberInfo;
-        _obj = obj;
-        Label = _propertyInfo.GetCustomAttributes<UiComboBox>().First().Label;
-        _layoutLineAttribute = layoutLineAttribute;
+        Label = memberInfo.GetCustomAttributes<UiComboBox>().First().Label;
 
 
         var propertyInfo = memberInfo as PropertyInfo;

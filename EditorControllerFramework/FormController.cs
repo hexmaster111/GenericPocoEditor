@@ -11,8 +11,8 @@ public struct FormController
     public ComboBoxController[] ComboBoxControllers;
     public SliderController[] SliderControllers;
 
-    public IController[] AllControllers => ButtonControllers
-        .Concat<IController>(TextBlockControllers)
+    public Controller[] AllControllers => ButtonControllers
+        .Concat<Controller>(TextBlockControllers)
         .Concat(TextBoxControllers)
         .Concat(CheckBoxControllers)
         .Concat(ComboBoxControllers)

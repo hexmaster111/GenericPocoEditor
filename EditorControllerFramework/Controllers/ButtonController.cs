@@ -5,20 +5,18 @@ using EditorControllerFramework.UiAttributes;
 
 namespace EditorControllerFramework.Controllers;
 
-public class ButtonController : IController
+public class ButtonController : Controller
 {
     public Action ButtonMethod;
     public string Label { get; }
-    public bool IsPlacedOnGrid => _layoutLineAttribute != null;
-    public int Row => _layoutLineAttribute.LineNumber;
-    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
-    
+
 
     private MemberInfo _memberInfo;
 
     private readonly UiLayoutLineAttribute? _layoutLineAttribute;
 
     public ButtonController(MemberInfo memberInfo, object instance, UiLayoutLineAttribute? layoutLineAttribute)
+        : base(memberInfo, instance, layoutLineAttribute, true)
     {
         Label = memberInfo.GetCustomAttributes<UiButton>().First().Label;
         _memberInfo = memberInfo;
