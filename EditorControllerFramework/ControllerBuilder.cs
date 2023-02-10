@@ -29,7 +29,7 @@ public static class ControllerBuilder
                 .GetCustomAttributes<UiLayoutLineAttribute>()
                 .OrderBy(x => x.LineNumber);
 
-        Debugger.Break();
+ 
 
 
         var controllers = new FormController()

@@ -10,57 +10,31 @@ public class CheckBoxController : IController
 
     public bool IsPlacedOnGrid => _layoutLineAttribute != null;
     public int Row => _layoutLineAttribute.LineNumber;
-    public int Column => _layoutLineAttribute.GetMemberIndex(_memberInfo.Name);
-
-    private readonly UiLayoutLineAttribute? _layoutLineAttribute;
+    public int Column => _layoutLineAttribute.GetMemberIndex(_propertyInfo.Name);
 
     public bool IsChecked
     {
         get
         {
-            switch (_memberInfo.MemberType)
-            {
-                case MemberTypes.Property:
-                {
-                    var propertyInfo = (PropertyInfo)_memberInfo;
-                    var value = propertyInfo.GetValue(_obj);
-                    return value != null && (bool)value;
-                }
-                case MemberTypes.Field:
-                {
-                    var fieldInfo = (FieldInfo)_memberInfo;
-                    var value = fieldInfo.GetValue(_obj);
-                    return value != null && (bool)value;
-                }
-                default:
-                    throw new UiBuilderException("Member type not supported");
-            }
+            var propertyInfo = _propertyInfo;
+            var value = propertyInfo.GetValue(_obj);
+            return value != null && (bool)value;
         }
-        set
-        {
-            switch (_memberInfo)
-            {
-                case PropertyInfo propertyInfo:
-                    propertyInfo.SetValue(_obj, value);
-                    break;
-                case FieldInfo fieldInfo:
-                    fieldInfo.SetValue(_obj, value);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        set => _propertyInfo.SetValue(_obj, value);
     }
 
-    MemberInfo _memberInfo;
-    object _obj;
+    private readonly UiLayoutLineAttribute? _layoutLineAttribute;
+    private readonly PropertyInfo _propertyInfo;
+    private readonly object _obj;
 
 
-    public CheckBoxController(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
+    public CheckBoxController(MemberInfo propertyInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute)
     {
-        _memberInfo = memberInfo;
+        if (propertyInfo.MemberType != MemberTypes.Property)
+            throw new UiBuilderException("UiCheckBox attribute can only be used on properties");
+        _propertyInfo = (PropertyInfo)propertyInfo;
         _obj = obj;
-        Label = _memberInfo.GetCustomAttributes<UiCheckBox>().First().Label;
+        Label = _propertyInfo.GetCustomAttributes<UiCheckBox>().First().Label;
         _layoutLineAttribute = layoutLineAttribute;
     }
 }
