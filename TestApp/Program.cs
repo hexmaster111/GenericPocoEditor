@@ -28,6 +28,8 @@ internal class Program
             SomeBasicDataClassesArray = Array.Empty<SomeBasicDataClass>()
         };
 
+        a.Name = "new name";
+        
         var res = ControllerBuilder.BuildFormController(a, a.GetType());
         ViewBuilder.BuildWindow(res).ShowDialog();
     }
@@ -51,6 +53,8 @@ public class TestPoco
     }
 
     [UiTextBlock(nameof(Name))] public string Name { get; set; }
+
+
     public string Description { get; set; }
 
 

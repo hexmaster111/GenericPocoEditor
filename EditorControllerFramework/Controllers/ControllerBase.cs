@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Reflection.Emit;
 using EditorControllerFramework.Exceptions;
 using EditorControllerFramework.UiAttributes;
 
@@ -13,6 +14,18 @@ public class Controller
     private readonly UiLayoutLineAttribute? _layoutLineAttribute;
     public readonly PropertyInfo PropertyInfo;
     public readonly object _obj;
+
+    private object _value;
+
+    private void newSetMethod(object value)
+    {
+        _value = value;
+    }
+
+    private object newGetMethod()
+    {
+        return _value;
+    }
 
     public Controller(MemberInfo memberInfo, object obj, UiLayoutLineAttribute? layoutLineAttribute,
         bool isMethod = false)
